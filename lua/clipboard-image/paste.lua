@@ -23,10 +23,21 @@ M.paste_img = function(opts)
     conf_toload = conf_utils.merge_config(conf_toload, opts)
 
     local conf = conf_utils.load_config(conf_toload)
-    local path = utils.get_img_path(conf.img_dir, conf.img_name)
-    local path_txt = utils.get_img_path(conf.img_dir_txt, conf.img_name, "txt")
+    
+    local img_dir = conf.img_dir
+    local img_dir_txt = conf.img_dir_txt
+    
+    if conf.img_dir_relative_to_buffer then
+      local buffer_dir = vim.fn.expand("%:p:h")
+      if buffer_dir ~= "" then
+        img_dir = utils.join_paths(buffer_dir, conf.img_dir)
+      end
+    end
+    
+    local path = utils.get_img_path(img_dir, conf.img_name)
+    local path_txt = utils.get_img_path(img_dir_txt, conf.img_name, "txt")
 
-    utils.create_dir(conf.img_dir)
+    utils.create_dir(img_dir)
     paste_img_to(path)
 
     utils.insert_txt(conf.affix, path_txt)

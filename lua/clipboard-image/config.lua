@@ -4,6 +4,7 @@ M.config = {
   default = {
     img_dir = "img",
     img_dir_txt = "img",
+    img_dir_relative_to_buffer = false,
     img_name = function()
       return os.date "%Y-%m-%d-%H-%M-%S"
     end,
@@ -62,6 +63,7 @@ M.load_config = function(config_toload)
     img_name = M.load_opt(config_toload.img_name),
     img_dir = M.load_opt(config_toload.img_dir),
     img_dir_txt = M.load_opt(config_toload.img_dir_txt),
+    img_dir_relative_to_buffer = M.load_opt(config_toload.img_dir_relative_to_buffer),
     img_handler = config_toload.img_handler,
   }
 end

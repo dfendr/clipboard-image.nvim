@@ -91,6 +91,27 @@ M.create_dir = function(dir)
   end
 end
 
+---Join paths with proper separator
+---@param base string
+---@param relative string|table
+---@return string joined_path
+M.join_paths = function(base, relative)
+  local separator = "/"
+  if M.get_os() == "Windows" then
+    separator = "\\"
+  end
+  
+  if type(relative) == "table" then
+    local full_path = base
+    for _, dir in pairs(relative) do
+      full_path = full_path .. separator .. dir
+    end
+    return full_path
+  else
+    return base .. separator .. relative
+  end
+end
+
 ---@param dir string or table
 ---@param img_name string
 ---@param is_txt? '"txt"'
